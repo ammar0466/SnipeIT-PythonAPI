@@ -13,6 +13,7 @@ Usage
 -----
 
 -  See Example Scripts included in package for specific calls
+-  IMPORTANT : Change from import snipeit to import snipeit-ammar
 
 API Features
 ------------
