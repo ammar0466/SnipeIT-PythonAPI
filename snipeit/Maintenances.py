@@ -27,7 +27,7 @@ class Maintenances(object):
         """
         pass
 
-    def get(self, server, token, limit=None, order='asc', offset=None):
+    def get(self, server, token, limit=None, order='asc'):
         """Get list of maintenances
         
         Arguments:
@@ -41,20 +41,16 @@ class Maintenances(object):
             string -- List of maintenances in JSON format.
         """
         if limit is not None:
-            self.uri = '/api/v1/maintenances?limit={0}'.format(str(limit))
-            if offset is not None:
-                self.uri = self.uri + '&offset={0}'.format(str(offset))
+            self.uri = '/api/v1/maintenances?limit=' + str(limit)
         else:
             self.uri = '/api/v1/maintenances'
-            if offset is not None:
-                self.uri = self.uri + '?offset={0}'.format(str(offset))
         self.server = server + self.uri
-        headers = {'Authorization': 'Bearer {0}'.format(token)}
+        headers = {'Authorization': 'Bearer ' + token}
         results = requests.get(self.server, headers=headers)
         return results.content
         #return json.dumps(results.json(),indent=4, separators=(',', ':'))
 
-    def search(self, server, token, limit=None, order='asc', keyword=None, offset=None):
+    def search(self, server, token, limit=None, order='asc', keyword=None):
         """Get list of maintenances based on search keyword
         
         Arguments:
@@ -72,17 +68,15 @@ class Maintenances(object):
             keyword = ""
         
         if limit is not None:
-            self.uri = '/api/v1/maintenances?limit={0}&order={1}'.format(str(limit),order) 
+            self.uri = '/api/v1/maintenances?limit=' + str(limit) + '&order=' + order 
         else:
-            self.uri = '/api/v1/maintenances?order={0}'.format(order)
-        if offset is not None:
-            self.uri = self.uri + '&offset={0}'.format(str(offset))
-        self.server = server + self.uri  + '&search={0}'.format(keyword)
-        headers = {'Authorization': 'Bearer {0}'.format(token)}
+            self.uri = '/api/v1/maintenances'  + '?order=' + order 
+        self.server = server + self.uri  + '&search=' + keyword
+        headers = {'Authorization': 'Bearer ' + token}
         results = requests.get(self.server, headers=headers)
         return results.content        
 
-    def getMaintenanceByID(self, server, token, limit=None, order='asc', assetID=None, offset=None):
+    def getMaintenanceByID(self, server, token, limit=None, order='asc', assetID=None):
         """Get maintenances information by asset ID
         
         Arguments:
@@ -99,13 +93,11 @@ class Maintenances(object):
             string -- List of maintenances in JSON format.
         """
         if limit is not None:
-            self.uri = '/api/v1/maintenances?limit={0}&order={1}'.format(str(limit), order)
+            self.uri = '/api/v1/maintenances?limit=' + str(limit) + '&order=' + order
         else:
-            self.uri = '/api/v1/maintenances?order={0}'.format(order)
-        if offset is not None:
-            self.uri = self.uri + '&offset={0}'.format(str(offset))
-        self.server = server + self.uri + '&asset_id={0}'.format(assetID)
-        headers = {'Authorization': 'Bearer {0}'.format(token)}
+            self.uri = '/api/v1/maintenances' + '?order=' + order
+        self.server = server + self.uri + '&asset_id=' + assetID
+        headers = {'Authorization': 'Bearer ' + token}
         results = requests.get(self.server, headers=headers)
         return results.content
         #return json.dumps(results.json(),indent=4, separators=(',', ':'))
@@ -123,6 +115,6 @@ class Maintenances(object):
         """
         self.uri = '/api/v1/maintenances'
         self.server = server + self.uri
-        headers = {'Content-Type': 'application/json','Authorization': 'Bearer {0}'.format(token)}
+        headers = {'Content-Type': 'application/json','Authorization': 'Bearer ' + token}
         results = requests.post(self.server, headers=headers, data=payload)
         return json.dumps(results.json(),indent=4, separators=(',', ':'))

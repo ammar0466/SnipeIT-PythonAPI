@@ -27,7 +27,7 @@ class Users(object):
     def __init__(self):
         pass
 
-    def get(self, server, token, limit=None, order='asc', offset=None):
+    def get(self, server, token, limit=None, order='asc'):
         """Get list of user data.
         
         Arguments:
@@ -42,17 +42,15 @@ class Users(object):
             string -- list of user data in JSON format
         """
         if limit is not None:
-            self.uri = '/api/v1/users?limit={0}&order={1}'.format(str(limit), order)
+            self.uri = '/api/v1/users?limit=' + str(limit) + '&order=' + order 
         else:
-            self.uri = '/api/v1/users?order={0}'.format(order)
-        if offset is not None:
-            self.uri = self.uri + '&offset={0}'.format(str(offset))            
+            self.uri = '/api/v1/users' + '?order=' + order 
         self.server = server + self.uri
-        headers = {'Authorization': 'Bearer {0}'.format(token)}
+        headers = {'Authorization': 'Bearer ' + token}
         results = requests.get(self.server, headers=headers)
         return results.content
 
-    def search(self, server, token, limit=None, order='asc', keyword=None, offset=None):
+    def search(self, server, token, limit=None, order='asc', keyword=None):
         """Get list of users based on search keyword
         
         Arguments:
@@ -69,13 +67,11 @@ class Users(object):
             keyword = ""
         
         if limit is not None:
-            self.uri = '/api/v1/users?limit={0}&order={1}'.format(str(limit), order)
+            self.uri = '/api/v1/users?limit=' + str(limit) + '&order=' + order
         else:
-            self.uri = '/api/v1/users?order={0}'.format(order)
-        if offset is not None:
-            self.uri = self.uri + '&offset={0}'.format(str(offset))            
-        self.server = server + self.uri  + '&search={0}'.format(keyword)
-        headers = {'Authorization': 'Bearer {0}'.format(token)}
+            self.uri = '/api/v1/users'  + '?order=' + order 
+        self.server = server + self.uri  + '&search=' + keyword
+        headers = {'Authorization': 'Bearer ' + token}
         results = requests.get(self.server, headers=headers)
         return results.content
         
@@ -92,8 +88,11 @@ class Users(object):
         """
         self.uri = '/api/v1/users'
         self.server = server + self.uri
-        headers = {'Content-Type': 'application/json','Authorization': 'Bearer {0}'.format(token)}
+        headers = {'Content-Type': 'application/json','Authorization': 'Bearer ' + token}
         results = requests.post(self.server, headers=headers, data=payload)
+        # print (results.content)
+        # jsonData = json.loads(results.content)
+        # return jsonData['status']
         return json.dumps(results.json(),indent=4, separators=(',', ':'))
 
     def getID(self, server, token, user_name):
@@ -107,14 +106,28 @@ class Users(object):
         Returns:
             [type] -- [description]
         """
-        self.uri = '/api/v1/users?search={0}'.format(user_name)
-        self.server = server + self.uri 
-        headers = {'Content-Type': 'application/json','Authorization': 'Bearer {0}'.format(token)}
+        global userID
+        self.uri = '/api/v1/users?username='
+        user_name = user_name.lower()
+        self.server = server + self.uri + user_name
+        headers = {'Content-Type': 'application/json','Authorization': 'Bearer ' + token}
         results = requests.get(self.server, headers=headers)
-        jsonData = json.loads(results.content)
-        if len(jsonData['rows']) < 2 and jsonData['rows'][0]['id'] is not None:
-            UserID = jsonData['rows'][0]['id']
-        return UserID
+        jsonData = json.loads((results.content).decode('utf-8').replace("'",'"'))
+        
+
+        userID = ""
+
+        if jsonData['total'] == 0:
+           userID ="notfound"
+        else:
+            for row in jsonData['rows']:
+                if user_name == "":
+                    userID = "EmptyName"
+                    break
+                if row['username'].casefold() == user_name:
+                    userID = row['id']
+                    break
+        return userID
 
     def updateUser(self, server, token, UserID, payload):
         """[summary]
@@ -128,11 +141,12 @@ class Users(object):
         Returns:
             [type] -- [description]
         """
-        self.uri = '/api/v1/users/{0}'.format(UserID)
-        self.server = server + self.uri
-        headers = {'Content-Type': 'application/json','Authorization': 'Bearer {0}'.format(token)}
+        self.uri = '/api/v1/users/'
+        self.server = server + self.uri + UserID
+        headers = {'Content-Type': 'application/json','Authorization': 'Bearer ' + token}
         results = requests.patch(self.server, headers=headers, data=payload)
         jsonData = json.loads(results.content)
+        print (json.dumps(jsonData,indent=4, separators=(',', ':')))
         return jsonData['status']
 
     def delete(self, server, token, UserID):
@@ -146,9 +160,9 @@ class Users(object):
         Returns:
             [type] -- [description]
         """
-        self.uri = '/api/v1/users/{0}'.format(UserID)
-        self.server = server + self.uri 
-        headers = {'Content-Type': 'application/json','Authorization': 'Bearer {0}'.format(token)}
+        self.uri = '/api/v1/users/'
+        self.server = server + self.uri + UserID
+        headers = {'Content-Type': 'application/json','Authorization': 'Bearer ' + token}
         results = requests.delete(self.server, headers=headers)
         jsonData = json.loads(results.content)
         return jsonData['status']
@@ -164,9 +178,9 @@ class Users(object):
         Returns:
             string -- Detailed information of user by ID
         """
-        self.uri = '/api/v1/users/{0}'.format(userID)
-        self.server = server + self.uri
-        headers = {'Content-Type': 'application/json','Authorization': 'Bearer {0}'.format(token)}
+        self.uri = '/api/v1/users/'
+        self.server = server + self.uri + userID
+        headers = {'Content-Type': 'application/json','Authorization': 'Bearer ' + token}
         results = requests.get(self.server, headers=headers)                
         return results.content
 
@@ -181,9 +195,9 @@ class Users(object):
         Returns:
             string -- list of assets in JSON format
         """
-        self.uri = '/api/v1/users/{0}/assets'.format(UserID)
-        self.server = server + self.uri
-        headers = {'Content-Type': 'application/json','Authorization': 'Bearer {0}'.format(token)}
+        self.uri = '/api/v1/users/'
+        self.server = server + self.uri + UserID + '/assets'
+        headers = {'Content-Type': 'application/json','Authorization': 'Bearer ' + token}
         results = requests.get(self.server, headers=headers)
         return results.content
     
@@ -199,8 +213,8 @@ class Users(object):
         Returns:
             string -- list of accessories in JSON format
         """
-        self.uri = '/api/v1/users/{0}/accessories'.format(UserID)
-        self.server = server + self.uri
-        headers = {'Content-Type': 'application/json','Authorization': 'Bearer {0}'.format(token)}
+        self.uri = '/api/v1/users/'
+        self.server = server + self.uri + UserID + '/accessories'
+        headers = {'Content-Type': 'application/json','Authorization': 'Bearer ' + token}
         results = requests.get(self.server, headers=headers)
         return results.content

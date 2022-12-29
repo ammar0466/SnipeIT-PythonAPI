@@ -27,13 +27,12 @@ class Accessories(object):
     def __init__(self):
         pass
 
-    def get(self, server, token, limit=None, offset=None):
+    def get(self, server, token, limit=None):
         """Get list of accessories
         
         Arguments:
             server {string} -- Server URI
             token {string} -- Token value to be used for accessing the API
-            offset {string} -- Starting offset to get the data
         
         Keyword Arguments:
             limit {string} -- Limit the number of data returned from the server (default: {50})
@@ -42,15 +41,11 @@ class Accessories(object):
             string -- List of accessories from the server, in JSON formatted
         """
         if limit is not None:
-            self.uri = '/api/v1/accessories?limit={0}'.format(str(limit))
-            if offset is not None:
-                self.uri = self.uri + '&offset={0}'.format(str(offset))
+            self.uri = '/api/v1/accessories?limit=' + str(limit)
         else:
             self.uri = '/api/v1/accessories'
-            if offset is not None:
-                self.uri = self.uri + '?offset={0}'.format(str(offset))            
         self.server = server + self.uri
-        headers = {'Authorization': 'Bearer {0}'.format(token)}
+        headers = {'Authorization': 'Bearer ' + token}
         results = requests.get(self.server, headers=headers)
         return results.content
         
@@ -71,14 +66,13 @@ class Accessories(object):
             keyword = ""
         
         if limit is not None:
-            self.uri = '/api/v1/accessories?limit={0}&order={1}'.format(str(limit),order)            
+            self.uri = '/api/v1/accessories?limit=' + str(limit) + '&order=' + order
         else:
-            self.uri = '/api/v1/accessories?order={0}'.format(order)               
-        self.server = server + self.uri  + '&search={0}'.format(keyword)
-        headers = {'Authorization': 'Bearer {0}'.format(token)}
+            self.uri = '/api/v1/accessories'  + '?order=' + order 
+        self.server = server + self.uri  + '&search=' + keyword
+        headers = {'Authorization': 'Bearer ' + token}
         results = requests.get(self.server, headers=headers)
         return results.content
-
     def create(self, server, token, payload):
         """Create new accessories data.
         
@@ -92,7 +86,7 @@ class Accessories(object):
         """
         self.uri = '/api/v1/accessories'
         self.server = server + self.uri
-        headers = {'Content-Type': 'application/json','Authorization': 'Bearer {0}'.format(token)}
+        headers = {'Content-Type': 'application/json','Authorization': 'Bearer ' + token}
         results = requests.post(self.server, headers=headers, data=payload)
         return json.dumps(results.json(),indent=4, separators=(',', ':'))
 
@@ -109,7 +103,7 @@ class Accessories(object):
         """
         self.uri = '/api/v1/accessories/'
         self.server = server + self.uri + str(accessoriesID)
-        headers = {'Content-Type': 'application/json','Authorization': 'Bearer {0}'.format(token)}
+        headers = {'Content-Type': 'application/json','Authorization': 'Bearer ' + token}
         results = requests.get(self.server, headers=headers)        
         return results.content
    
