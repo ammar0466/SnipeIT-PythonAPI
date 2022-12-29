@@ -7,7 +7,7 @@ API directly from Python.
 Installation
 ------------
 
-Run the command ``pip install snipeit``
+Run the command ``pip install snipeit-ammar``
 
 Usage
 -----
@@ -36,6 +36,10 @@ API Features
 
 Release History
 ---------------
+-  0.13
+
+   -  Change getID by search specific asset name
+
 
 -  0.12
 

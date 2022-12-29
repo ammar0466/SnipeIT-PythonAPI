@@ -3,15 +3,15 @@ from setuptools import setup
 with open("README.rst","r") as fh:
 	long_description = fh.read()
 	
-setup(name='snipeit',
-      version='1.2',
+setup(name='snipeit_ammar',
+      version='1.3',
 	  long_description=long_description,
       long_description_content_type="text/markdown",
-      description=("Python library to access the SnipeIT API"),
-      url='https://github.com/jbloomer/SnipeIT-PythonAPI',
-      author='Jared Bloomer (Cox Automotive Inc.)',
-      author_email='jared.bloomer@coxautoinc.com',
+      description=("Python library to access the SnipeIT API-forked"),
+      url='https://github.com/ammar0466/SnipeIT-PythonAPI',
+      author='Ammar Ibrahim',
+      author_email='ammar@webkaido.com',
       license='MIT',
-      packages=['snipeit'],
+      packages=['snipeit_ammar'],
       install_requires=['requests','simplejson'],
       zip_safe=False)
