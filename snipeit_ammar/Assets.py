@@ -316,36 +316,7 @@ class Assets(object):
         return json.dumps(results.json(),indent=4, separators=(',', ':'))
 
         #sample jsonData from getID function
-        """
-        {'total': 2, 'rows': [
-            {'id': 72, 'name': 'Ren', 'asset_tag': 'ANIMA-0070', 'serial': '', 'model': {'id': 9, 'name': 'HP Z600'
-                }, 'model_number': 'Z600', 'eol': None, 'status_label': {'id': 2, 'name': 'Ready to Deploy', 'status_type': 'deployable', 'status_meta': 'deployed'
-                }, 'category': {'id': 5, 'name': 'Workstation'
-                }, 'manufacturer': {'id': 7, 'name': 'HP'
-                }, 'supplier': {'id': 2, 'name': 'Refurbished'
-                }, 'notes': None, 'order_number': None, 'company': {'id': 1, 'name': 'Anima Vitae Point'
-                }, 'location': None, 'rtd_location': {'id': 1, 'name': 'Kota Damansara'
-                }, 'image': '/uploads/models/assetmodel-image-NZtsA8ck5d.jpg', 'assigned_to': {'id': 88, 'username': 'ammar', 'name': 'Muhammad Ammar bin Ibrahim', 'first_name': 'Muhammad Ammar', 'last_name': 'bin Ibrahim', 'employee_number': '215', 'type': 'user'
-                }, 'warranty_months': None, 'warranty_expires': None, 'created_at': {'datetime': '2022-11-01 11: 51: 48', 'formatted': '2022-11-01 11: 51 AM'
-                }, 'updated_at': {'datetime': '2022-11-08 14: 53: 39', 'formatted': '2022-11-08 02: 53 PM'
-                }, 'last_audit_date': None, 'next_audit_date': None, 'deleted_at': None, 'purchase_date': None, 'last_checkout': {'datetime': '2022-11-01 11: 51: 48', 'formatted': '2022-11-01 11: 51 AM'
-                }, 'expected_checkin': None, 'purchase_cost': None, 'checkin_counter': 0, 'checkout_counter': 1, 'requests_counter': 0, 'user_can_checkout': False, 'custom_fields': [], 'available_actions': {'checkout': True, 'checkin': True, 'clone': True, 'restore': False, 'update': True, 'delete': False
-                }
-            },
-            {'id': 60, 'name': 'jiren', 'asset_tag': 'ANIMA-0058', 'serial': '', 'model': {'id': 3, 'name': 'Lenovo P620 Threadripper'
-                }, 'model_number': 'P620', 'eol': None, 'status_label': {'id': 2, 'name': 'Ready to Deploy', 'status_type': 'deployable', 'status_meta': 'deployable'
-                }, 'category': {'id': 5, 'name': 'Workstation'
-                }, 'manufacturer': {'id': 4, 'name': 'Lenovo'
-                }, 'supplier': {'id': 1, 'name': 'OG Solutions'
-                }, 'notes': None, 'order_number': None, 'company': {'id': 1, 'name': 'Anima Vitae Point'
-                }, 'location': None, 'rtd_location': None, 'image': '/uploads/models/assetmodel-image-XgzRu8kZfv.png', 'assigned_to': None, 'warranty_months': None, 'warranty_expires': None, 'created_at': {'datetime': '2022-02-23 14: 02: 12', 'formatted': '2022-02-23 02: 02 PM'
-                }, 'updated_at': {'datetime': '2022-02-23 14: 02: 12', 'formatted': '2022-02-23 02: 02 PM'
-                }, 'last_audit_date': None, 'next_audit_date': None, 'deleted_at': None, 'purchase_date': None, 'last_checkout': None, 'expected_checkin': None, 'purchase_cost': '11659.00', 'checkin_counter': 0, 'checkout_counter': 0, 'requests_counter': 0, 'user_can_checkout': True, 'custom_fields': [], 'available_actions': {'checkout': True, 'checkin': True, 'clone': True, 'restore': False, 'update': True, 'delete': True
-                }
-            }
-            ]
-        }
-        """
+
         #iterate jsonData find id
         #jsonData = json.loads(results.content)
         #for row in jsonData['rows']:
